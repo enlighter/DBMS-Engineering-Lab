@@ -1,4 +1,5 @@
 import mysql.connector as mariadb
+from pprintpp import pprint
 
 ''' to run:
 i)
@@ -18,13 +19,19 @@ v)
 '''
 
 mariadb_connection = mariadb.connect(host='localhost', user='public', password='test3R', database='seleri')
+additional_connection = mariadb.connect(host='localhost', user='public', password='test3R', database='seleri')
 cursor = mariadb_connection.cursor()
+backup_cursor = additional_connection.cursor()
 
 try:
-	cursor.execute("select firstname, lastname from actors")
+	cursor.execute("show tables")
 
-	for first_name, last_name in cursor:
-		print("First name: {}, Last name: {}".format(first_name,last_name))
+	print("The tables in this database are :")
+	for (table_name,) in cursor:
+		print("-> {}".format(table_name))
+		backup_cursor.execute("select * from %s" % table_name)
+		table_contents = backup_cursor.fetchall()
+		pprint(table_contents)
 
 	### query 1
 	cursor.execute('select title, year from starred, movies where starred.MRN = movies.MRN and starred.A_ID in ( select A_ID from actors where actors.firstname="Shahrukh" and actors.lastname="Khan") ')
