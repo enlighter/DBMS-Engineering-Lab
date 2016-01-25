@@ -45,21 +45,21 @@ try:
 
 	print("\nResult of query no. 2:")
 	for title, year in cursor:
-		print("title: {}, year: {}".format(title, year))
+		print("movie: {}, released in : {}".format(title, year))
 
 	### query 3
 	cursor.execute('select title, year, genre from starred, movies where starred.MRN=movies.MRN and starred.A_ID in (select a.A_ID from actors as a where a.firstname="Shahrukh" and a.lastname="Khan") and movies.genre="thriller" and year>2000 ')
 
 	print("\nResult of query no. 3:")
 	for title, year, genre in cursor:
-		print("title: {}, year: {}, genre: {}".format(title, year, genre))
+		print("movie: {}, released in: {}, which is a : {}".format(title, year, genre))
 
 	### query 4
-	cursor.execute('select actors.firstname, actors.lastname from actors, starred where actors.A_ID=starred.A_ID and starred.MRN in (select starred.MRN from starred, movies where starred.MRN=movies.MRN and starred.A_ID in (select a.A_ID from actors as a where a.firstname="Shahrukh" and a.lastname="Khan")) and starred.A_ID not in (select a.A_ID from actors as a where a.firstname="Shahrukh" and a.lastname="Khan") and actors.A_ID in (select b.A_ID from actors as a, actors as b where (YEAR(a.dob)-YEAR(b.dob)-(DATE_FORMAT(a.dob, "%m%d") < DATE_FORMAT(b.dob, "%m%d")) <= -10)) ')
+	cursor.execute('select distinct actors.firstname, actors.lastname from actors, starred where actors.A_ID=starred.A_ID and starred.MRN in (select starred.MRN from starred, movies where starred.MRN=movies.MRN and starred.A_ID in (select a.A_ID from actors as a where a.firstname="Shahrukh" and a.lastname="Khan")) and starred.A_ID not in (select a.A_ID from actors as a where a.firstname="Shahrukh" and a.lastname="Khan") and actors.A_ID in (select b.A_ID from actors as a, actors as b where (YEAR(a.dob)-YEAR(b.dob)-(DATE_FORMAT(a.dob, "%m%d") < DATE_FORMAT(b.dob, "%m%d")) <= -10)) ')
 
 	print("\nResult of query no. 4:")
 	for firstname, lastname in cursor:
-		print("title: {}, year: {}".format(firstname, lastname))
+		print("actor's name: {} {}".format(firstname, lastname))
 
 	### query 5
 	cursor.execute('select max(dcount), did, df, dl from (select count(movies.MRN) as dcount, directors.D_ID as did, directors.firstname as df, directors.lastname as dl from actors, starred, directors, directed, movies where actors.A_ID = starred.A_ID and directors.D_ID = directed.D_ID and starred.MRN = movies.MRN and directed.MRN = movies.MRN and actors.firstname = "Shahrukh" and actors.lastname = "Khan" group by did) as dfrequency ')
