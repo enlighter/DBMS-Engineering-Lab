@@ -17,7 +17,7 @@ v)
 >select max(dcount), did, df, dl from (select count(movies.MRN) as dcount, directors.D_ID as did, directors.firstname as df, directors.lastname as dl from actors, starred, directors, directed, movies where actors.A_ID = starred.A_ID and directors.D_ID = directed.D_ID and starred.MRN = movies.MRN and directed.MRN = movies.MRN and actors.firstname = "Shahrukh" and actors.lastname = "Khan" group by did) as dfrequency;
 '''
 
-mariadb_connection = mariadb.connect(user='public', password='test3R', database='seleri')
+mariadb_connection = mariadb.connect(host='localhost', user='public', password='test3R', database='seleri')
 cursor = mariadb_connection.cursor()
 
 try:
@@ -31,7 +31,7 @@ try:
 
 	print("\nResult of query no. 1:")
 	for title, year in cursor:
-		print("title: {}, year: {}".format(title, year))
+		print("movie: {}, released in : {}".format(title, year))
 
 	### query 2
 	cursor.execute('select title, year from starred, movies where starred.MRN = movies.MRN and starred.A_ID in (select a.A_ID from actors as a where a.firstname="Shahrukh" and a.lastname="Khan") and movies.MRN in (select directed.MRN from directed, movies where directed.MRN = movies.MRN and directed.D_ID in (select directors.D_ID from directors where directors.firstname="Shahrukh" and directors.lastname="Khan")) ')
