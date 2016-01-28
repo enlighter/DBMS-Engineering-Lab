@@ -73,3 +73,7 @@ except mariadb.Error as error:
 
 #Actually commits the changes to the database
 mariadb_connection.commit()
+additional_connection.commit()
+
+mariadb_connection.close()
+additional_connection.close()
