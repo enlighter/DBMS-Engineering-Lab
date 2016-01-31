@@ -58,12 +58,12 @@ You will be prompted for the administrative password you selected during install
 
 First, we will create a database for our Django project.  Each 
 project should have its own isolated database for security reasons.  We 
-will call our database `myproject`
+will call our database `testernet`
  in this guide, but it's always better to select something more 
 descriptive.  We'll set the default type for the database to UTF-8, 
 which is what Django expects:
 
-    CREATE DATABASE myproject CHARACTER SET UTF8;
+    CREATE DATABASE testernet CHARACTER SET UTF8;
 
 Remember to end all commands at an SQL prompt with a semicolon.
 
@@ -71,11 +71,11 @@ Next, we will create a database user which we will use to connect to
 and interact with the database.  Set the password to something strong 
 and secure:
 
-    CREATE USER myprojectuser@localhost IDENTIFIED BY 'password';
+    CREATE USER testernetuser@localhost IDENTIFIED BY 'password';
 
 Now, all we need to do is give our database user access rights to the database we created:
 
-    GRANT ALL PRIVILEGES ON myproject.* TO myprojectuser@localhost;
+    GRANT ALL PRIVILEGES ON testernet.* TO testernetuser@localhost;
 
 Flush the changes so that they will be available during the current session:
 
@@ -97,32 +97,32 @@ You can get the `virtualenv` package that allows you to create these environment
 
 Make a directory to hold your Django project.  Move into the directory afterwards:
 
-    mkdir ~/myproject
-    cd ~/myproject
+    mkdir ~/testernet
+    cd ~/testernet
 
 We can create a virtual environment to store our Django project's Python requirements by typing:
 
-    virtualenv myprojectenv
+    virtualenv testernetenv
 
-This will install a local copy of Python and `pip` into a directory called `myprojectenv` within your project directory.
+This will install a local copy of Python and `pip` into a directory called `testernetenv` within your project directory.
 
 Before we install applications within the virtual environment, we need to activate it. You can do so by typing:
 
-    source myprojectenv/bin/activate
+    source testernetenv/bin/activate
 
-Your prompt will change to indicate that you are now operating within the virtual environment. It will look something like this `(myprojectenv)user@host:~/myproject$`.
+Your prompt will change to indicate that you are now operating within the virtual environment. It will look something like this `(testernetenv)user@host:~/testernet$`.
 
 Once your virtual environment is active, you can install Django with `pip`.  We will also install the `mysqlclient` package that will allow us to use the database we configured:
 
     pip install django mysqlclient
 
-We can now start a Django project within our `myproject` 
+We can now start a Django project within our `testernet` 
 directory.  This will create a child directory of the same name to hold 
 the code itself, and will create a management script within the current 
 directory.  Make sure to add the dot at the end of the command so that 
 this is set up correctly:
 
-    django-admin.py startproject myproject 
+    django-admin.py startproject testernet 
 
 ## Configure the Django Database Settings
 
@@ -130,7 +130,7 @@ Now that we have a project, we need to configure it to use the database we creat
 
 Open the main Django project settings file located within the child project directory:
 
-    nano ~/myproject/myproject/settings.py
+    nano ~/testernet/testernet/settings.py
 
 Towards the bottom of the file, you will see a `DATABASES` section that looks like this:
 
@@ -148,7 +148,7 @@ Towards the bottom of the file, you will see a `DATABASES` section that looks li
 This is currently configured to use SQLite as a database.  We need to
  change this so that our MySQL/MariaDB database is used instead.
 
-First, change the engine so that it points to the `mysql` backend instead of the `sqlite3` backend.  For the `NAME`, use the name of your database (`myproject`
+First, change the engine so that it points to the `mysql` backend instead of the `sqlite3` backend.  For the `NAME`, use the name of your database (`testernet`
  in our example).  We also need to add login credentials.  We need the 
 username, password, and host to connect to.  We'll add and leave blank 
 the port option so that the default is selected:
@@ -158,8 +158,8 @@ the port option so that the default is selected:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'myproject',
-            'USER': 'myprojectuser',
+            'NAME': 'testernet',
+            'USER': 'testernetuser',
             'PASSWORD': 'password',
             'HOST': 'localhost',
             'PORT': '',
@@ -180,7 +180,7 @@ We can begin by creating and applying migrations to our database.
 Since we don't have any actual data yet, this will simply set up the 
 initial database structure:
 
-    cd ~/myproject
+    cd ~/testernet
     python manage.py makemigrations
     python manage.py migrate
 
