@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'online_sourses_dbms_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'seleri',
+        'NAME': 'coursemaster',
         'USER': 'public',
         'PASSWORD': 'test3R',
         'HOST': 'localhost',
