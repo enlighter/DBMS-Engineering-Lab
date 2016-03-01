@@ -29,7 +29,7 @@ class Instructor(models.Model):
 
 
 class CourseContent(models.Model):
-    courseID = models.ForeignKey(course, on_delete=models.CASCADE)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
     partID = models.AutoField(primary_key=True)
     content_location = models.TextField(validators=[URLValidator()])
     content_name = models.CharField(max_length=30)
@@ -39,4 +39,4 @@ class CourseContent(models.Model):
 
 class Performance(models.Model):
     score = models.TextField(max_length=10)
-    partID = models.ForeignKey(course_content, on_delete=models.CASCADE)
+    partID = models.ForeignKey(CourseContent, on_delete=models.CASCADE)
