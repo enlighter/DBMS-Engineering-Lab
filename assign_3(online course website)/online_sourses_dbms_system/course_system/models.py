@@ -1,8 +1,9 @@
 from django.db import models
 from django.core.validators import URLValidator #for dealing with urls
 
+
 # Create your models here.
-class learners(models.Model):
+class Learners(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     nick = models.CharField(max_length=12, unique=True)
@@ -10,7 +11,8 @@ class learners(models.Model):
     email = models.EmailField(max_length=69, unique=True, primary_key=True)
     #set password in views.py userform
 
-class course(models.Model):
+
+class Course(models.Model):
     course_name = models.CharField(max_length=42)
     courseID = models.AutoField(primary_key=True)
     about = models.CharField(max_length=999)
@@ -18,7 +20,7 @@ class course(models.Model):
     domain = models.CharField(max_length=33)
 
 
-class instructor(models.Model):
+class Instructor(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=60, unique=True)
@@ -26,7 +28,7 @@ class instructor(models.Model):
     instructorID = models.AutoField(primary_key=True)
 
 
-class course_content(models.Model):
+class CourseContent(models.Model):
     courseID = models.ForeignKey(course, on_delete=models.CASCADE)
     partID = models.AutoField(primary_key=True)
     content_location = models.TextField(validators=[URLValidator()])
@@ -35,6 +37,6 @@ class course_content(models.Model):
     has_evaluation = models.BooleanField()
 
 
-class performance(models.Model):
+class Performance(models.Model):
     score = models.TextField(max_length=10)
     partID = models.ForeignKey(course_content, on_delete=models.CASCADE)
