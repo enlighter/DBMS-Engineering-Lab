@@ -34,7 +34,7 @@ class Learners(models.Model):
 
 class Accomplishment(models.Model):
     status = models.CharField(max_length=9, default='audit', validators=[validate_status()], blank=True)
-    performance = models.FloatField(null=True, blank=True)
+    performance = models.FloatField(null=True, blank=True, default=0)
     #Many to one relationship with course content
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     #one to one relationship wwith a learner
@@ -72,7 +72,7 @@ class CourseContent(models.Model):
 
 
 class Performance(models.Model):
-    score = models.IntegerField(validators=[validate_marks()])
+    score = models.IntegerField(validators=[validate_marks()], default=0)
     #Many to one relationship with course content
     course_content = models.ForeignKey(CourseContent, on_delete=models.CASCADE)
     #one to one relationship wwith a learner
