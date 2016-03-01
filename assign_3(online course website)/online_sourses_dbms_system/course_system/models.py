@@ -20,6 +20,16 @@ def validate_status(value):
         )
 
 
+class Course(models.Model):
+    course_name = models.CharField(max_length=42)
+    courseID = models.AutoField(unique=True, primary_key=True)
+    about = models.CharField(max_length=999)
+    provided_by_institute = models.CharField(max_length=99, default="freelance", blank=True)
+    domain = models.CharField(max_length=33)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+
 # Create your models here.
 class Learners(models.Model):
     first_name = models.CharField(max_length=30)
@@ -33,22 +43,12 @@ class Learners(models.Model):
 
 
 class Accomplishment(models.Model):
-    status = models.CharField(max_length=9, default='audit', validators=[validate_status()], blank=True)
+    status = models.CharField(max_length=9, default='audit', validators=[validate_status], blank=True)
     performance = models.FloatField(null=True, blank=True, default=0)
     #Many to one relationship with course content
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     #one to one relationship wwith a learner
     student = models.OneToOneField(Learners, on_delete=models.CASCADE, primary_key=True)
-
-
-class Course(models.Model):
-    course_name = models.CharField(max_length=42)
-    courseID = models.AutoField(unique=True, primary_key=True)
-    about = models.CharField(max_length=999)
-    provided_by_institute = models.CharField(max_length=99, default="freelance", blank=True)
-    domain = models.CharField(max_length=33)
-    start_date = models.DateField()
-    end_date = models.DateField()
 
 
 class Instructor(models.Model):
@@ -72,7 +72,7 @@ class CourseContent(models.Model):
 
 
 class Performance(models.Model):
-    score = models.IntegerField(validators=[validate_marks()], default=0)
+    score = models.IntegerField(validators=[validate_marks], default=0)
     #Many to one relationship with course content
     course_content = models.ForeignKey(CourseContent, on_delete=models.CASCADE)
     #one to one relationship wwith a learner
