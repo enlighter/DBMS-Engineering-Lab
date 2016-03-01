@@ -29,6 +29,9 @@ class Course(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    def __str__(self):
+        return self.course_name
+
 
 # Create your models here.
 class Learners(models.Model):
