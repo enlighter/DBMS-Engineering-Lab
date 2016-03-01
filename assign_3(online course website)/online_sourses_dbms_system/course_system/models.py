@@ -41,8 +41,11 @@ class Learners(models.Model):
     website = models.TextField(validators=[URLValidator()], null=True, blank=True)
     email = models.EmailField(max_length=69, unique=True, primary_key=True)
     #Many to Many relationship with course
-    courses = models.ManyToManyField(Course)
+    courses = models.ManyToManyField(Course, blank=True)
     #set password in views.py userform
+
+    def __str__(self):
+        return self.first_name+" "+self.email
 
 
 class Accomplishment(models.Model):
@@ -61,7 +64,10 @@ class Instructor(models.Model):
     website = models.TextField(validators=[URLValidator()], null=True, blank=True)
     instructorID = models.AutoField(unique=True, primary_key=True)
     #Many to many relationship with course
-    courses = models.ManyToManyField(Course)
+    courses = models.ManyToManyField(Course, blank=True)
+
+    def __str__(self):
+        return self.first_name+" "+self.email
 
 
 class CourseContent(models.Model):
@@ -72,6 +78,9 @@ class CourseContent(models.Model):
     content_name = models.CharField(max_length=30)
     content_type = models.CharField(max_length=18)
     has_evaluation = models.BooleanField()
+
+    def __str__(self):
+        return self.content_type+" : "+self.content_name
 
 
 class Performance(models.Model):
