@@ -105,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#User authorization model
+#AUTH_USER_MODEL = "course_system.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

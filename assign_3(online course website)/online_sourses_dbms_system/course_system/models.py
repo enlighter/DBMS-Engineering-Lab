@@ -2,6 +2,33 @@ from django.db import models
 from django.core.validators import URLValidator #for dealing with urls
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import BaseUserManager
+
+
+class UserManager(BaseUserManager):
+
+    def create_user(self, email, password, **kwargs):
+        user = self.model(
+            email=self.normalize_email(email),
+            is_active=True,
+            **kwargs
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+#
+#    def create_superuser(self, email, password, **kwargs):
+#        user = self.model(
+#            email=email,
+#            is_staff=True,
+#            is_superuser=True,
+#            is_active=True,
+#            **kwargs
+#        )
+#        user.set_password(password)
+#        user.save(using=self._db)
+#        return user
+
 
 
 def validate_marks(value):
@@ -33,8 +60,13 @@ class Course(models.Model):
         return self.course_name
 
 
-# Create your models here.
-class Learners(models.Model):
+class Learners(models.Model, models.AbstractBaseUser, models.PermissionsMixin):
+    '''Learner is a type of user for the website
+    '''
+    USERNAME_FIELD = 'email'
+
+    objects = UserManager()
+
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     nick = models.CharField(max_length=12, unique=True)
@@ -44,6 +76,10 @@ class Learners(models.Model):
     courses = models.ManyToManyField(Course, blank=True)
     #set password in views.py userform
 
+    def get_full_name(self):
+        return self.first_name+" "+self.email
+    def get_short_name(self):
+        return self.first_name+" "+self.email
     def __str__(self):
         return self.first_name+" "+self.email
 
@@ -58,6 +94,12 @@ class Accomplishment(models.Model):
 
 
 class Instructor(models.Model):
+    '''Instructor is a type of user for the website
+    '''
+    USERNAME_FIELD = 'email'
+
+    objects = UserManager()
+
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     email = models.EmailField(max_length=60, unique=True)
@@ -66,6 +108,10 @@ class Instructor(models.Model):
     #Many to many relationship with course
     courses = models.ManyToManyField(Course, blank=True)
 
+    def get_full_name(self):
+        return self.first_name+" "+self.email
+    def get_short_name(self):
+        return self.first_name+" "+self.email
     def __str__(self):
         return self.first_name+" "+self.email
 
