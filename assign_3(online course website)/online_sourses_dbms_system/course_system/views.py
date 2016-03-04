@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
+
 from .models import Learners
 from .forms import *
 
@@ -10,5 +12,8 @@ def index(request):
 
 
 def register_student(request):
-    welcome_message = "You're Now at the student registration page."
-    return HttpResponse(welcome_message)
+    template = loader.get_template('course_system/index.html')
+    #context = {
+    #    'student_registration': student_registration,
+    #}
+    return HttpResponse(template.render(request))
