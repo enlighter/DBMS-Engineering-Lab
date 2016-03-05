@@ -9,8 +9,8 @@ from .forms import *
 
 
 def index(request):
-    welcome_message = "Hello, visitor. You're at our Online Course System!"
-    return HttpResponse(welcome_message)
+    template = loader.get_template('course_system/index.html')
+    return HttpResponse(template.render(request))
 
 
 def register_student(request):
@@ -25,7 +25,7 @@ def register_student(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/main/')
-    return render_to_response('course_system/index.html', context_instance=RequestContext(request))
+    return render_to_response('course_system/student_login.html', context_instance=RequestContext(request))
     #context = {
     #    'student_registration': student_registration,
     #}
