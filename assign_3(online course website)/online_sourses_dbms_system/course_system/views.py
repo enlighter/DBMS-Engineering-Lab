@@ -29,3 +29,17 @@ def register_student(request):
     #context = {
     #    'student_registration': student_registration,
     #}
+
+def register_teacher(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/main/')
+    return render_to_response('course_system/teacher_login.html', context_instance=RequestContext(request))
