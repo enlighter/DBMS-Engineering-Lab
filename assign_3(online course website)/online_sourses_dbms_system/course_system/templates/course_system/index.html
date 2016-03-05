@@ -23,30 +23,34 @@
 <!-- Mixins-->
 <!-- Pen Title-->
 <div class="pen-title">
-  <h1>Login as a Learner</h1><span>Pen <i class='fa fa-code'></i> by <a href='http://andytran.me'>Enlighter</a></span>
+  <h1>Login as a Learner</h1><span>Pen <i class='fa fa-code'></i> by <a href='http://andytran.me'>enlighter</a></span>
 </div>
-<div class="rerun"><a href="">Refresh</a></div>
+<div class="rerun"><a href="">Click on the Pencil button <u>below</u> to Register</a></div>
 <div class="container">
   <div class="card"></div>
+
+  {% block student_login %}
   <div class="card">
     <h1 class="title">Login</h1>
-    <form>
+    <form method="post">
       <div class="input-container">
-        <input type="text" id="Username" required="required"/>
-        <label for="Username">Username</label>
+        <input type="text" id="username" name="username" required="required"/>
+        <label for="Username">Email Id</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="password" id="Password" required="required"/>
+        <input type="password" id="password" name="password" required="required"/>
         <label for="Password">Password</label>
         <div class="bar"></div>
       </div>
       <div class="button-container">
-        <button><span>Go</span></button>
+        <button type="submit"><span>Go</span></button>
       </div>
       <div class="footer"><a href="#">Forgot your password?</a></div>
     </form>
   </div>
+  {% endblock %}
+
   <div class="card alt">
     <div class="toggle"></div>
     <h1 class="title">Register
