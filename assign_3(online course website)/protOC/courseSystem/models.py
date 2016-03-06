@@ -24,17 +24,16 @@ def validate_status(value):
 
 
 class MyUserManager(BaseUserManager):
-    def _create_user(self, email, firstname, password, **other_fields):
+    def _create_user(self, email, firstname, password=None, **other_fields):
         """
         Creates and saves a User with the given email, firstname and password.
         """
         now = timezone.now()
         if not email:
-            raise ValueError('The given email must be set')
+            raise ValueError('Users must have an email address')
         if not firstname:
-            raise ValueError('The given firstname must be set')
-        if not password:
-            raise ValueError('The given password must be set')
+            raise ValueError('Users must have a first name')
+
         email = self.normalize_email(email)
         user = self.model(email=email, firstname=firstname,
                           last_login=now,
@@ -66,8 +65,8 @@ class MyUser(AbstractBaseUser):
     website = models.TextField(validators=[URLValidator()], null=True, blank=True)
     email = models.EmailField(max_length=69, unique=True, primary_key=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    #set password in views.py userform
-    is_admin = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
 
     class Meta:
@@ -91,10 +90,10 @@ class MyUser(AbstractBaseUser):
         return self.is_admin
 
     def has_perm(self, perm, obj=None):
-        return self.is_admin
+        return self.is_active
 
     def has_module_perms(self, app_label):
-        return self.is_admin
+        return self.is_active
 
 
 class Course(models.Model):
