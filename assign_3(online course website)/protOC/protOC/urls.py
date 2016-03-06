@@ -1,4 +1,4 @@
-"""online_sourses_dbms_system URL Configuration
+"""protOC URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -17,6 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^course_system/', include('course_system.urls')),
+    url(r'^course_system/', include('courseSystem.urls')),
     url(r'^admin/', admin.site.urls),
 ]
