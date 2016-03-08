@@ -93,22 +93,22 @@
 
           {% if registered %}
           Registered!
-          <a href="/courseSystem/">Now Login.</a><br />
+          <a href="/course_system/register_student/">Now Login.</a><div class="close"></div>
           {% else %}
           Register here!<br />
 
 
       <div class="close"></div>
     </h1>
-    <form id="user_form" method="post" action="/courseSystem/student_login/"
+    <form id="user_form" method="post" action="/course_system/register_student/"
             enctype="multipart/form-data">
 
     {% csrf_token %}
 
-    {{ learners_profile_form.as_p }}
+    <!-- {{ learners_profile_form.as_p }} -->
 
       <div class="input-container">
-        {{ user_form.as_p }}
+        <!-- {{ user_form.as_p }} -->
         <input type="text" id="username" name="username" required="required"/>
         <label for="username">Email Id</label>
         <div class="bar"></div>
