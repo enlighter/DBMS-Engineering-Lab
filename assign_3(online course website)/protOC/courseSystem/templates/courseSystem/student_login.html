@@ -89,11 +89,26 @@
   {% block student_registration %}
   <div class="card alt">
     <div class="toggle"></div>
-    <h1 class="title">Register
+    <h1 class="title">
+
+          {% if registered %}
+          Registered!
+          <a href="/courseSystem/">Now Login.</a><br />
+          {% else %}
+          Register here!<br />
+
+
       <div class="close"></div>
     </h1>
-    <form>
+    <form id="user_form" method="post" action="/courseSystem/student_login/"
+            enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ learners_profile_form.as_p }}
+
       <div class="input-container">
+        {{ user_form.as_p }}
         <input type="text" id="username" name="username" required="required"/>
         <label for="username">Email Id</label>
         <div class="bar"></div>
@@ -132,6 +147,7 @@
         <button><span>Next</span></button>
       </div>
     </form>
+    {% endif %}
   </div>
 </div>
   {% endblock %}
