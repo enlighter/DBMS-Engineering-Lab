@@ -60,6 +60,11 @@
 <div class="pen-title">
   <h1>Login as a Learner</h1><span>Pen <i class='fa fa-code'></i> by <a href='http://github.com/enlighter'>enlighter</a></span>
 </div>
+
+{% if error %}
+<div class="rerun"><a href=""> {{ error_msg }} </a></div>
+
+{% else %}
 <div class="rerun"><a href="">Click on the Pencil button <u>below</u> to Register</a></div>
 <div class="container">
   <div class="card"></div>
@@ -146,10 +151,13 @@
         <button><span>Next</span></button>
       </div>
     </form>
-    {% endif %}
+    {% endif %} <!-- this is for registered flag -->
   </div>
 </div>
   {% endblock %}
+
+{% endif %} <!-- this is for error flag -->
+
 <!-- Portfolio--><a id="portfolio" href="http://andytran.me/" title="View my portfolio!"><i class="fa fa-link"></i></a>
 <!-- CodePen--><a id="codepen" href="http://codepen.io/andytran/" title="Follow me!"><i class="fa fa-codepen"></i></a>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
