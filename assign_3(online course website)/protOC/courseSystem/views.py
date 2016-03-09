@@ -1,4 +1,5 @@
 import traceback
+import logging
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect, render_to_response
 from django.http import *
@@ -10,6 +11,14 @@ from django import forms
 from .models import MyUser, Learners, Instructor
 from .admin import UserCreationForm, UserChangeForm
 from .forms import LearnersProfileForm
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler('site.log')
+fh.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 
 def index(request):
@@ -25,6 +34,10 @@ def register_student(request):
         registered = False
 
         if request.POST :
+            #debug log
+            logger.info(str(request.POST))
+            logger.info(str(request.POST['form_type']))
+
             email = request.POST['username']
             firstname = request.POST['firstname']
             lastname = request.POST['lastname']
