@@ -35,29 +35,40 @@ def register_student(request):
 
         if request.POST :
             #debug log
+            logger.info("Learner's login page")
             logger.info(str(request.POST))
             logger.info(str(request.POST['form_type']))
 
-            email = request.POST['username']
-            firstname = request.POST['firstname']
-            lastname = request.POST['lastname']
-            nick = request.POST['nick']
-            website = request.POST['website']
-            password1 = request.POST['password']
-            password2 = request.POST['repeat_password']
+            if request.POST['form_type'] == 'register':
+                #Process registration
+                logger.info("Registration form used")
+                email = request.POST['username']
+                firstname = request.POST['firstname']
+                lastname = request.POST['lastname']
+                nick = request.POST['nick']
+                website = request.POST['website']
+                password1 = request.POST['password']
+                password2 = request.POST['repeat_password']
 
-            if password1 and password2 and password1 != password2:
-                raise forms.ValidationError("Passwords don't match")
-            else:
-                password = password2
+                if password1 and password2 and password1 != password2:
+                    raise forms.ValidationError("Passwords don't match")
+                else:
+                    password = password2
 
-            user = MyUser(email=email, password=password, firstname=firstname, lastname=lastname,
+                user = MyUser(email=email, password=password, firstname=firstname, lastname=lastname,
                                          website=website)
-            user.save()
-            learner = Learners(user=user, nick=nick)
-            learner.save()
+                user.save()
+                learner = Learners(user=user, nick=nick)
+                learner.save()
 
-            registered = True
+                registered = True
+
+            elif request.POST['form_type'] == 'login':
+                #Process login
+                logger.info("Login form used")
+
+            else:
+                logger.debug("invalid form type")
 
         else:
             print("POST method of submitting form is required!")
@@ -90,25 +101,40 @@ def register_teacher(request):
         registered = False
 
         if request.POST :
-            email = request.POST['username']
-            firstname = request.POST['firstname']
-            lastname = request.POST['lastname']
-            website = request.POST['website']
-            password1 = request.POST['password']
-            password2 = request.POST['repeat_password']
+            #debug log
+            logger.info("Instructor's login page")
+            logger.info(str(request.POST))
+            logger.info(str(request.POST['form_type']))
 
-            if password1 and password2 and password1 != password2:
-                raise forms.ValidationError("Passwords don't match")
-            else:
-                password = password2
+            if request.POST['form_type'] == 'register':
+                #Process registration
+                logger.info("Registration form used")
+                email = request.POST['username']
+                firstname = request.POST['firstname']
+                lastname = request.POST['lastname']
+                website = request.POST['website']
+                password1 = request.POST['password']
+                password2 = request.POST['repeat_password']
 
-            user = MyUser(email=email, password=password, firstname=firstname, lastname=lastname,
+                if password1 and password2 and password1 != password2:
+                    raise forms.ValidationError("Passwords don't match")
+                else:
+                    password = password2
+
+                user = MyUser(email=email, password=password, firstname=firstname, lastname=lastname,
                                          website=website)
-            user.save()
-            teacher = Instructor(user=user)
-            teacher.save()
+                user.save()
+                teacher = Instructor(user=user)
+                teacher.save()
 
-            registered = True
+                registered = True
+
+            elif request.POST['form_type'] == 'login':
+                #Process login
+                logger.info("Login form used")
+
+            else:
+                logger.debug("invalid form type")
 
         else:
             print("POST method of submitting form is required!")
@@ -117,15 +143,18 @@ def register_teacher(request):
         error = True
         errno, strerror = e.args
         error_msg = "Encountered error: \nIntegrity error({0}): {1}".format(errno, strerror)
+        logger.error(error_msg)
 
     except forms.ValidationError as e:
         error = True
         strerror = e.args
         error_msg = "Encountered error: \nValidation error: {0}".format(strerror)
+        logger.error(error_msg)
 
     except:
         error = True
         error_msg = "Encountered error:" + traceback.format_exc(limit=1)
+        logger.error(traceback.format_exc())
 
     return render(request,
             'courseSystem/teacher_login.html',

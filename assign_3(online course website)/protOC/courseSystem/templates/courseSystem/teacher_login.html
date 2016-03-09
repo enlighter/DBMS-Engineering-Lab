@@ -84,7 +84,7 @@
         <div class="bar"></div>
       </div>
       <div class="button-container">
-        <button type="submit"><span>Go</span></button>
+        <button name="form_type" type="submit" value="login"><span>Go</span></button>
       </div>
       <div class="footer"><a href="#">Forgot your password?</a></div>
     </form>
@@ -98,7 +98,7 @@
 
       {% if registered %}
       Registered!
-      <a href="/course_system/register_teacher/">Now Login.</a><div class="close"></div>
+      <a href="/course_system/teacher_login/">Now Login.</a><div class="close"></div>
       {% else %}
       Register here!<br /><div class="close"></div>
       <!-- endif is at the end of the form -->
@@ -140,7 +140,7 @@
         <div class="bar"></div>
       </div>
       <div class="button-container">
-        <button><span>Next</span></button>
+        <button name="form_type" type="submit" value="register"><span>Next</span></button>
       </div>
     </form>
     {% endif %} <!-- this is for registered flag -->
