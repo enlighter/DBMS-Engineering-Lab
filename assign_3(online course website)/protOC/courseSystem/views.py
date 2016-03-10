@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django import forms
 
-from .models import MyUser, Learners, Instructor
+from .models import MyUser, Learners, Instructor, Course
 from .admin import UserCreationForm, UserChangeForm
 from .forms import LearnersProfileForm
 
@@ -206,3 +206,18 @@ def register_teacher(request):
     return render(request,
             'courseSystem/teacher_login.html',
             {'registered': registered, 'error': error, 'error_msg': error_msg})
+
+
+def all_courses(request):
+    output = []
+    latest_courses_list = Course.objects.order_by("-start_date")
+    for course in latest_courses_list:
+        element = []
+        element.append( course.course_name )
+        element.append( 'About: ' + course.about + "\nProvided By: " + \
+                 course.provided_by_institute + "\nDomain: " + course.domain + \
+                 "\nStart Date: {0}, End Date: {1}\n".format(course.start_date, course.end_date) )
+        output.append(element)
+    return render(request,
+            'courseSystem/all_courses.html',
+            {'output' : output})
