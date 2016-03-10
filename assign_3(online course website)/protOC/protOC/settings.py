@@ -66,6 +66,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'protOC.wsgi.application'
 
 
@@ -106,6 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ## Custom user models in our app
 # set auth user model
 AUTH_USER_MODEL = 'courseSystem.MyUser'
+AUTHENTICATION_BACKENDS = ['courseSystem.backends.MyBackend', ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

@@ -67,8 +67,10 @@ def register_student(request):
                 #Process login
                 logger.info("Login form used")
 
+
             else:
                 logger.debug("invalid form type")
+                raise forms.ValidationError("Invalid form type")
 
         else:
             print("POST method of submitting form is required!")
@@ -132,9 +134,15 @@ def register_teacher(request):
             elif request.POST['form_type'] == 'login':
                 #Process login
                 logger.info("Login form used")
+                username = request.POST['username']
+                password = request.POST['password']
+
+                user = authenticate(username=username, password=password)
+                logger.info("got " + str(user))
 
             else:
                 logger.debug("invalid form type")
+                raise forms.ValidationError("Invalid form type")
 
         else:
             print("POST method of submitting form is required!")
