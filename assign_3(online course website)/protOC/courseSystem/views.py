@@ -20,16 +20,33 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 fh.setFormatter(formatter)
 logger.addHandler(fh)
 
+def get_learner(user_object):
+    if user_object is not None:
+        try:
+            return user_object.learners
+        except:
+            return None
+    else:
+        raise forms.ValidationError("Can't process an empty user object")
+
+def get_instructor(user_object):
+    if user_object is not None:
+        try:
+            return user_object.instructor
+        except:
+            return None
+    else:
+        raise forms.ValidationError("Can't process an empty user object")
 
 def index(request):
     template = loader.get_template('courseSystem/index.html')
     return HttpResponse(template.render(request))
 
 def register_student(request):
+    logout(request)
     error = False
     error_msg = ''
     try:
-        logout(request)
 
         registered = False
 
@@ -66,6 +83,20 @@ def register_student(request):
             elif request.POST['form_type'] == 'login':
                 #Process login
                 logger.info("Login form used")
+                username = request.POST['username']
+                password = request.POST['password']
+
+                user = authenticate(username=username, password=password)
+                logger.info("got " + str(user))
+
+                if get_learner(user) is not None:
+                    learner = user.learners
+                    logger.info("Found an instructor instance for this user with nick : {0}".
+                                format(learner.nick))
+                    if learner is not None:
+                        login(request, user=user)
+                else:
+                    raise forms.ValidationError("No learner account found for these login details!")
 
 
             else:
@@ -95,11 +126,10 @@ def register_student(request):
 
 
 def register_teacher(request):
+    logout(request)
     error = False
     error_msg = ''
     try:
-        logout(request)
-
         registered = False
 
         if request.POST :
@@ -139,6 +169,15 @@ def register_teacher(request):
 
                 user = authenticate(username=username, password=password)
                 logger.info("got " + str(user))
+
+                if get_instructor(user) is not None:
+                    instructor = user.instructor
+                    logger.info("Found an instructor instance for this user with id : {0}".
+                                format(instructor.instructorID))
+                    if instructor is not None:
+                        login(request, user=user)
+                else:
+                    raise forms.ValidationError("No instructor account found for these login details!")
 
             else:
                 logger.debug("invalid form type")

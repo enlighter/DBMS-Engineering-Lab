@@ -30,8 +30,8 @@ class MyBackend(object):
                 raise forms.ValidationError('Invalid login details')
         return None
 
-    def get_user(self, user_id):
+    def get_user(self, email):
         try:
-            return MyUser.objects.get(id=user_id)
+            return MyUser.objects.get(email=email)
         except MyUser.DoesNotExist:
            return None

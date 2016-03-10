@@ -43,11 +43,11 @@ class MyUserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password, firstname, **other_fields):
-        return self._create_user(email, firstname, password,
+        return self._create_user(email=email, firstname=firstname, password=password,
                                  **other_fields)
 
     def create_superuser(self, email, password, firstname, **other_fields):
-        return self._create_user(email, firstname, password,
+        return self._create_user(email=email, firstname=firstname, password=password,
                                  **other_fields)
 
 
