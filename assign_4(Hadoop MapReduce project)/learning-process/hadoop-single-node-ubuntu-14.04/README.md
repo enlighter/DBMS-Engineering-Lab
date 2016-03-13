@@ -1,6 +1,6 @@
 #Hadoop 2.6 Installing on Ubuntu 14.04 (Single-Node Cluster)</h1>
 ##Hadoop 2.7.2 on Ubuntu 14.04.2
-I followe this guide for Linux Mint Rosa with hadoop 2.7.2
+I followed this guide for Linux Mint Rosa with hadoop 2.7.2
 ###Install Java verison 7 or 8 on your ubuntu
 ##Adding a dedicated Hadoop user
 
@@ -89,11 +89,11 @@ We can check if ssh works:
 	...
 
 ##Install Hadoop
-	hduser@laptop:~$ wget http://mirrors.sonic.net/apache/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz
-	hduser@laptop:~$ tar xvzf hadoop-2.6.0.tar.g
+	hduser@laptop:~$ wget http://a.mbbsindia.com/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
+	hduser@laptop:~$ tar xvzf hadoop-2.7.2.tar.gz
 We want to move the Hadoop installation to the /usr/local/hadoop directory using the following command:
 
-	hduser@laptop:~/hadoop-2.6.0$ sudo mv * /usr/local/hadoop
+	hduser@laptop:~/hadoop-2.7.2$ sudo mv * /usr/local/hadoop
 	[sudo] password for hduser: 
 	hduser is not in the sudoers file.  This incident will be reported
 	
@@ -103,7 +103,7 @@ Oops!... We got:
 
 This error can be resolved by logging in as a root user, and then add hduser to sudo:
 
-	hduser@laptop:~/hadoop-2.6.0$ su k
+	hduser@laptop:~/hadoop-2.7.2$ su k
 	Password: 
 
 	k@laptop:/home/hduser$ sudo adduser hduser sudo
@@ -111,12 +111,12 @@ This error can be resolved by logging in as a root user, and then add hduser to 
 	Adding user `hduser' to group `sudo' ...
 	Adding user hduser to group sudo
 	Done.
-Now, the hduser has root priviledge, we can move the Hadoop installation to the **/usr/local/hadoop** directory without any problem:
+Now, the **hduser** has root priviledge, we can move the Hadoop installation to the **/usr/local/hadoop** directory without any problem:
 
 	k@laptop:/home/hduser$ sudo su hduser
 
-	hduser@laptop:~/hadoop-2.6.0$ sudo mv * /usr/local/hadoop 
-	hduser@laptop:~/hadoop-2.6.0$ sudo chown -R hduser:hadoop /usr/local/hadoop
+	hduser@laptop:~/hadoop-2.7.2$ sudo mv * /usr/local/hadoop 
+	hduser@laptop:~/hadoop-2.7.2$ sudo chown -R hduser:hadoop /usr/local/hadoop
 
 ##Setup Configuration Files
 The following files will have to be modified to complete the Hadoop setup:
@@ -131,14 +131,22 @@ The following files will have to be modified to complete the Hadoop setup:
 Before editing the **.bashrc** file in our home directory, we need to find the path where Java has been installed to set the **JAVA_HOME** environment variable using the following command:
 
 	hduser@laptop update-alternatives --config java
-	There is only one alternative in link group java (providing /usr/bin/java): /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
-	Nothing to configure.
+	There are 2 choices for the alternative java (providing /usr/bin/java).
+
+  	Selection    Path                                            Priority   Status
+	------------------------------------------------------------
+  	  0            /usr/lib/jvm/java-8-oracle/jre/bin/java          1074      auto mode
+  	  1            /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java   1071      manual mode
+	* 2            /usr/lib/jvm/java-8-oracle/jre/bin/java          1074      manual mode
+
+	Press enter to keep the current choice[*], or type selection number: 0
+
 Now we can append the following to the end of **~/.bashrc**:
 
 	hduser@laptop:~$ vi ~/.bashrc
 
 	#HADOOP VARIABLES START
-	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+	export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 	export HADOOP_INSTALL=/usr/local/hadoop
 	export PATH=$PATH:$HADOOP_INSTALL/bin
 	export PATH=$PATH:$HADOOP_INSTALL/sbin
@@ -154,13 +162,13 @@ Now we can append the following to the end of **~/.bashrc**:
 note that the JAVA_HOME should be set as the path just before the '.../bin/':
 
 	hduser@ubuntu-VirtualBox:~$ javac -version
-	javac 1.7.0_75
+	javac 1.8.0_74
 
 	hduser@ubuntu-VirtualBox:~$ which javac
 	/usr/bin/javac
 
 	hduser@ubuntu-VirtualBox:~$ readlink -f /usr/bin/javac
-	/usr/lib/jvm/java-7-openjdk-amd64/bin/javac
+	/usr/lib/jvm/java-8-oracle/bin/javac
 
 ###2. /usr/local/hadoop/etc/hadoop/hadoop-env.sh
 
@@ -168,7 +176,7 @@ We need to set **JAVA_HOME** by modifying **hadoop-env.sh** file.
 
 	hduser@laptop:~$ vi /usr/local/hadoop/etc/hadoop/hadoop-env.sh
 
-	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+	export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 Adding the above statement in the hadoop-env.sh file ensures that the value of JAVA_HOME variable will be available to Hadoop whenever it is started up.
 
@@ -441,3 +449,4 @@ Let's start the Hadoop again and see its Web UI:
 ![Hadoop Web UI](http://www.bogotobogo.com/Hadoop/images/Install/Hadoop_50070.png)
 
 
+Courtesy : bogotobogo.com
