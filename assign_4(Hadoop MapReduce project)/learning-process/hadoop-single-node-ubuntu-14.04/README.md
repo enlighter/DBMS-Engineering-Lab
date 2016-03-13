@@ -330,3 +330,114 @@ under **/usr/local/hadoop_store/hdfs/namenode** folder:
 	SHUTDOWN_MSG: Shutting down NameNode at enlighterCOM/127.0.1.1
 	************************************************************/
 
+Note that **hdfs namenode -format** command should be executed once before we start using Hadoop.
+If this command is executed again after Hadoop has been used, it'll destroy all the data on the Hadoop file system.
+
+##Starting Hadoop
+Now it's time to start the newly installed single node cluster.
+We can use **start-all.sh** or (**start-dfs.sh** and **start-yarn.sh**)
+
+	k@laptop:~$ cd /usr/local/hadoop/sbin
+
+	k@laptop:/usr/local/hadoop/sbin$ ls
+	distribute-exclude.sh    start-all.cmd        stop-balancer.sh
+	hadoop-daemon.sh         start-all.sh         stop-dfs.cmd
+	hadoop-daemons.sh        start-balancer.sh    stop-dfs.sh
+	hdfs-config.cmd          start-dfs.cmd        stop-secure-dns.sh
+	hdfs-config.sh           start-dfs.sh         stop-yarn.cmd
+	httpfs.sh                start-secure-dns.sh  stop-yarn.sh
+	kms.sh                   start-yarn.cmd       yarn-daemon.sh
+	mr-jobhistory-daemon.sh  start-yarn.sh        yarn-daemons.sh
+	refresh-namenodes.sh     stop-all.cmd
+	slaves.sh                stop-all.sh
+
+	k@laptop:/usr/local/hadoop/sbin$ sudo su hduser
+
+	hduser@laptop:/usr/local/hadoop/sbin$ start-all.sh
+	hduser@laptop:~$ start-all.sh
+	This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+	16/03/13 09:58:47 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+	Starting namenodes on [localhost]
+	localhost: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hduser-namenode-enlighterCOM.out
+	localhost: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hduser-datanode-enlighterCOM.out
+	Starting secondary namenodes [0.0.0.0]
+	0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hduser-secondarynamenode-enlighterCOM.out
+	16/03/13 09:59:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+	starting yarn daemons
+	starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hduser-resourcemanager-enlighterCOM.out
+	localhost: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hduser-nodemanager-enlighterCOM.out
+
+We can check if it's really up and running:
+
+	hduser@laptop ~ $ jps
+	20512 NodeManager
+	20404 ResourceManager
+	20821 Jps
+	19930 NameNode
+	20235 SecondaryNameNode
+
+The output means that we now have a functional instance of Hadoop running on our VPS (Virtual private server).
+
+Another way to check is using **netstat**:
+
+	hduser@laptop:~$ netstat -plten | grep java
+	(Not all processes could be identified, non-owned process info will not be shown, you would have to be root to see it all.)
+	tcp        0      0 127.0.0.1:54310         0.0.0.0:*               LISTEN      1001       942049      19930/java      
+	tcp        0      0 0.0.0.0:50090           0.0.0.0:*               LISTEN      1001       951307      20235/java      
+	tcp        0      0 0.0.0.0:50070           0.0.0.0:*               LISTEN      1001       942032      19930/java      
+	tcp6       0      0 :::8031                 :::*                    LISTEN      1001       951474      20404/java      
+	tcp6       0      0 :::8032                 :::*                    LISTEN      1001       951488      20404/java      
+	tcp6       0      0 :::8033                 :::*                    LISTEN      1001       952317      20404/java      
+	tcp6       0      0 :::8040                 :::*                    LISTEN      1001       950970      20512/java      
+	tcp6       0      0 :::8042                 :::*                    LISTEN      1001       954614      20512/java      
+	tcp6       0      0 :::41427                :::*                    LISTEN      1001       952297      20512/java      
+	tcp6       0      0 :::8088                 :::*                    LISTEN      1001       953476      20404/java      
+	tcp6       0      0 :::8030                 :::*                    LISTEN      1001       951484      20404/java
+
+##Stopping Hadoop
+	$ pwd
+	/usr/local/hadoop/sbin
+
+	$ ls
+	distribute-exclude.sh  httpfs.sh                start-all.sh         start-yarn.cmd    stop-dfs.cmd        yarn-daemon.sh
+	hadoop-daemon.sh       mr-jobhistory-daemon.sh  start-balancer.sh    start-yarn.sh     stop-dfs.sh         yarn-daemons.sh
+	hadoop-daemons.sh      refresh-namenodes.sh     start-dfs.cmd        stop-all.cmd      stop-secure-dns.sh
+	hdfs-config.cmd        slaves.sh                start-dfs.sh         stop-all.sh       stop-yarn.cmd
+	hdfs-config.sh         start-all.cmd            start-secure-dns.sh  stop-balancer.sh  stop-yarn.sh
+
+We run **stop-all.sh** or (**stop-dfs.sh** and **stop-yarn.sh**) to stop all the daemons running on our machine:
+
+	hduser@laptop:/usr/local/hadoop/sbin$ pwd
+	/usr/local/hadoop/sbin
+	hduser@laptop:/usr/local/hadoop/sbin$ ls
+	distribute-exclude.sh  httpfs.sh                start-all.cmd      start-secure-dns.sh  stop-balancer.sh    stop-yarn.sh
+	hadoop-daemon.sh       kms.sh                   start-all.sh       start-yarn.cmd       stop-dfs.cmd        yarn-daemon.sh
+	hadoop-daemons.sh      mr-jobhistory-daemon.sh  start-balancer.sh  start-yarn.sh        stop-dfs.sh         yarn-daemons.sh
+	hdfs-config.cmd        refresh-namenodes.sh     start-dfs.cmd      stop-all.cmd         stop-secure-dns.sh
+	hdfs-config.sh         slaves.sh                start-dfs.sh       stop-all.sh          stop-yarn.cmd
+	hduser@laptop:/usr/local/hadoop/sbin$ 
+	hduser@laptop:/usr/local/hadoop/sbin$ stop-all.sh
+	This script is Deprecated. Instead use stop-dfs.sh and stop-yarn.sh
+	15/04/18 15:46:31 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+	Stopping namenodes on [localhost]
+	localhost: stopping namenode
+	localhost: stopping datanode
+	Stopping secondary namenodes [0.0.0.0]
+	0.0.0.0: no secondarynamenode to stop
+	15/04/18 15:46:59 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+	stopping yarn daemons
+	stopping resourcemanager
+	localhost: stopping nodemanager
+	no proxyserver to stop
+
+##Hadoop Web Interfaces
+Let's start the Hadoop again and see its Web UI:
+
+	hduser@laptop:/usr/local/hadoop/sbin$ start-all.sh
+
+
+**http://localhost:50070/ - web UI of the NameNode daemon**
+
+![Hadoop Web UI](http://www.bogotobogo.com/Hadoop/images/Install/Hadoop_50070.png)
+
+
