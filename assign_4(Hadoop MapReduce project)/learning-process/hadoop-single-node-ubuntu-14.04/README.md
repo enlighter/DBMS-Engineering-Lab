@@ -161,3 +161,100 @@ note that the JAVA_HOME should be set as the path just before the '.../bin/':
 	hduser@ubuntu-VirtualBox:~$ readlink -f /usr/bin/javac
 	/usr/lib/jvm/java-7-openjdk-amd64/bin/javac
 
+###2. /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+
+We need to set **JAVA_HOME** by modifying **hadoop-env.sh** file.
+
+	hduser@laptop:~$ vi /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+
+	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+
+Adding the above statement in the hadoop-env.sh file ensures that the value of JAVA_HOME variable will be available to Hadoop whenever it is started up.
+
+###3. /usr/local/hadoop/etc/hadoop/core-site.xml:
+
+The **/usr/local/hadoop/etc/hadoop/core-site.xml** file contains configuration properties that Hadoop uses when starting up.
+This file can be used to override the default settings that Hadoop starts with.
+
+	hduser@laptop:~$ sudo mkdir -p /app/hadoop/tmp
+	hduser@laptop:~$ sudo chown hduser:hadoop /app/hadoop/tmp
+
+Open the file and enter the following in between the `<configuration></configuration>` tag:
+
+	hduser@laptop:~$ vi /usr/local/hadoop/etc/hadoop/core-site.xml
+
+	<configuration>
+	 <property>
+	  <name>hadoop.tmp.dir</name>
+	  <value>/app/hadoop/tmp</value>
+	  <description>A base for other temporary directories.</description>
+	 </property>
+
+	 <property>
+	  <name>fs.default.name</name>
+	  <value>hdfs://localhost:54310</value>
+	  <description>The name of the default file system.  A URI whose scheme and authority determine the FileSystem implementation. The  uri's scheme determines the config property (fs.SCHEME.impl) naming the FileSystem implementation class.  The uri's authority is used to determine the host, port, etc. for a filesystem.</description>
+	 </property>
+	</configuration>
+
+###4. /usr/local/hadoop/etc/hadoop/mapred-site.xml
+
+By default, the **/usr/local/hadoop/etc/hadoop/** folder contains
+**/usr/local/hadoop/etc/hadoop/mapred-site.xml.template**
+file which has to be renamed/copied with the name **mapred-site.xml**:
+
+	hduser@laptop:~$ cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml
+
+The **mapred-site.xml** file is used to specify which framework is being used for MapReduce. We need to enter the following content in between the `<configuration></configuration>` tag: 
+
+	<configuration>
+	 <property>
+	  <name>mapred.job.tracker</name>
+	  <value>localhost:54311</value>
+	  <description>The host and port that the MapReduce job tracker runs at.  If "local", then jobs are run in-process as a single map and reduce task.
+	  </description>
+	 </property>
+	</configuration>
+
+###5. /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+
+The **/usr/local/hadoop/etc/hadoop/hdfs-site.xml** file needs to be configured for each host in the cluster that is being used.
+It is used to specify the directories which will be used as the **namenode** and the **datanode** on that host.
+
+Before editing this file, we need to create two directories which will contain the namenode and the datanode for this Hadoop installation.
+This can be done using the following commands:
+
+	hduser@laptop:~$ sudo mkdir -p /usr/local/hadoop_store/hdfs/namenode
+	hduser@laptop:~$ sudo mkdir -p /usr/local/hadoop_store/hdfs/datanode
+	hduser@laptop:~$ sudo chown -R hduser:hadoop /usr/local/hadoop_store
+
+Open the file and enter the following content in between the `<configuration></configuration>` tag: 
+
+	hduser@laptop:~$ vi /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+
+	<configuration>
+	 <property>
+	  <name>dfs.replication</name>
+	  <value>1</value>
+	  <description>Default block replication.The actual number of replications can be specified when the file is created.
+	  The default is used if replication is not specified in create time.
+	  </description>
+	 </property>
+	 
+	 <property>
+	   <name>dfs.namenode.name.dir</name>
+	   <value>file:/usr/local/hadoop_store/hdfs/namenode</value>
+	 </property>
+	 
+	 <property>
+	   <name>dfs.datanode.data.dir</name>
+	   <value>file:/usr/local/hadoop_store/hdfs/datanode</value>
+	 </property>
+	</configuration>
+
+##Format the New Hadoop Filesystem
+
+Now, the Hadoop file system needs to be formatted so that we can start to use it. The format command should be issued with write permission since it creates **current** directory
+under **/usr/local/hadoop_store/hdfs/namenode** folder:
+
+
