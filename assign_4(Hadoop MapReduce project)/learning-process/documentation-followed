@@ -3,3 +3,8 @@ Hadoop environment system (CDH) is a comprehensive solution to manage hadoop ins
 tutorial : http://www.cloudera.com/developers/get-started-with-hadoop-tutorial/setup.html
 first test env: http://www.cloudera.com/downloads/quickstart_vms/5-4.html, http://www.cloudera.com/get-started/cloudera-live.html
 
+can't signup with a credit card to aws, so cannot get to cloudera live...
+Going to setup a cloudera CDH using the auto mode through cloudera manager.
+Follow this guide and also follow additional guide page for single-node mode:
+http://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_install_path_a.html#cmig_topic_5_5_unique_2
+We'll need an ubuntu 14.04 actual installation for this
