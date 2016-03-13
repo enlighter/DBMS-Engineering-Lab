@@ -1,7 +1,40 @@
 #Hadoop 2.6 Installing on Ubuntu 14.04 (Single-Node Cluster)</h1>
 ##Hadoop 2.7.2 on Ubuntu 14.04.2
 I followed this guide for Linux Mint Rosa with hadoop 2.7.2
-###Install Java verison 7 or 8 on your ubuntu
+##Install Java verison 7 or 8 on your ubuntu
+
+###How to Install Oracle Java 8 on Ubuntu 14.04 LTS
+
+Step #1: Add the WebUpd8 Team Personal Package Archive (PPA)
+
+Add the PPA:
+
+	sudo apt-add-repository ppa:webupd8team/java
+
+Step #2: The Installation
+
+As a matter of best practice we’ll update our packages:
+
+	sudo apt-get update
+
+Then let’s install Oracle Java 8 with the PPA installer:
+
+	sudo apt-get install oracle-java8-installer
+
+Be sure to accept the Oracle license!
+
+Step #3: Verify Installation
+
+Now verify that Java is installed and is of version 1.8.x:
+
+	java -version
+
+Your result should be similar to:
+
+	java version "1.8.0_74"
+	Java(TM) SE Runtime Environment (build 1.8.0_74-b02)
+	Java HotSpot(TM) 64-Bit Server VM (build 25.74-b02, mixed mode)
+
 ##Adding a dedicated Hadoop user
 
     k@laptop:~$ sudo addgroup hadoop
