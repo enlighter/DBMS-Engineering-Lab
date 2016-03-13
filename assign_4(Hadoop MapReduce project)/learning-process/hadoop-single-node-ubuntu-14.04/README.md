@@ -1,4 +1,4 @@
-#Hadoop 2.6 Installing on Ubuntu 14.04 (Single-Node Cluster)</h1>
+#Hadoop 2.7 Installing on Ubuntu 14.04 (Single-Node Cluster)</h1>
 ##Hadoop 2.7.2 on Ubuntu 14.04.2
 I followed this guide for Linux Mint Rosa with hadoop 2.7.2
 ##Install Java verison 7 or 8 on your ubuntu
