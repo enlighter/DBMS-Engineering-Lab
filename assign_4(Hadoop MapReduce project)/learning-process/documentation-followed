@@ -12,3 +12,27 @@ Keep following the installation process,
 At "Specify hosts for your CDH cluster installation." step in cloudera manager installation wizard, only use localhost
 as that is where i am doing everything, but you will need to follow the ssh setup part of 
 the README.md in the learning_process/hadoop-single-node-ubuntu-14.04/ folder
+
+Ran into problems with the cluster instatllation step -> not getting heartbeat for the started agent (port 7182)
+Here's how I solved it:
+Edit the /etc/hostname file with the following:
+###Within-the-hashes-is-the-entire-contents-of-my-/etc/hostname-file###
+localhost
+
+
+
+#######################################################################
+
+Update the /etc/hosts to look like this:
+(it should be of the format : <IP address> <FQDN> <shortname>)
+#######################################################################
+127.0.0.1       localhost       lch
+127.0.1.1       enlighter       enlighter
+
+*// Keep the rest as it is //*
+#######################################################################
+
+Then restart the cloudera-scm-agent :
+sudo service cloudera-scm-agent restart
+
+After succesful restart of the agent, go to the installion browser screen and click retry button to retry the installation.
