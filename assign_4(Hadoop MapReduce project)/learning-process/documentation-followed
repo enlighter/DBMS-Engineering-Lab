@@ -50,4 +50,4 @@ We had earlier created a /cm directory (path to the directory is "/cm/") owned b
 installing the cloudera system.
 now we create a directory say "3" in cm like /cm/3/ folder.
 For all the path options in the "Review Configuration for Single User Mode" page, we prefix /cm/3 to all the default paths
-given.
+given, except those /var/lib/ or /var/run/ paths where the default paths exist with non-root ownership.
