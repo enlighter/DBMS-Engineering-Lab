@@ -44,3 +44,10 @@ Then restart the cloudera-scm-agent :
 sudo service cloudera-scm-agent restart
 
 After succesful restart of the agent, go to the installion browser screen and click retry button to retry the installation.
+
+When the "Review Configuration for Single User Mode" comes in the installation wizard:
+We had earlier created a /cm directory (path to the directory is "/cm/") owned by cloudera-scm user through which we are
+installing the cloudera system.
+now we create a directory say "3" in cm like /cm/3/ folder.
+For all the path options in the "Review Configuration for Single User Mode" page, we prefix /cm/3 to all the default paths
+given.
