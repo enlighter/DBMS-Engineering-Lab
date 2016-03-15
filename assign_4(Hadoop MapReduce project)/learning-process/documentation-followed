@@ -8,3 +8,7 @@ Going to setup a cloudera CDH using the auto mode through cloudera manager.
 Follow this guide and also follow additional guide page for single-node mode:
 http://www.cloudera.com/documentation/enterprise/latest/topics/cm_ig_install_path_a.html#cmig_topic_5_5_unique_2
 We'll need an ubuntu 14.04 actual installation for this
+Keep following the installation process, 
+At "Specify hosts for your CDH cluster installation." step in cloudera manager installation wizard, only use localhost
+as that is where i am doing everything, but you will need to follow the ssh setup part of 
+the README.md in the learning_process/hadoop-single-node-ubuntu-14.04/ folder
