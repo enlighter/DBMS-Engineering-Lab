@@ -22,7 +22,7 @@ class MyBackend(object):
                 logger.error("User by this email ({0}) doesn't exist!".format(username))
                 raise forms.ValidationError('Invalid login details')
 
-            if user.check_password(password):
+            if user and user.check_password(password):
                 logger.info('User is authenticated, logging user in')
                 return user
             else:
