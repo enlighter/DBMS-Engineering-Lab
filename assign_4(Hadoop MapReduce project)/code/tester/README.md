@@ -5,3 +5,6 @@
 
 ##Hadoop operations
 * Hadoop operations are listed in order in the shell script `hadoop-operations.sh`
+
+##For testing
+* e.g. `cat sales_data | ./mapper.py`
