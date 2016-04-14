@@ -11,11 +11,10 @@ def mapper():
         # handle weed cases
         # what if there are not exactly 6 fields in that line?
         if len(data) != 6:
-            print("Unexpected line encountered", file=sys.stderr)
+            #print("Unexpected line encountered", file=sys.stderr)
             continue
 
         date, time, store, item, cost, payment = data
         print( "{0}\t{1}".format(store, cost) )
-
 
 mapper()
