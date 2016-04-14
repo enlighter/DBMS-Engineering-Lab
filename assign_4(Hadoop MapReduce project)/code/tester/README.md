@@ -10,4 +10,4 @@
 * e.g. `cat sales_data | ./mapper.py`
 * testing map-reduce script in one pipeline:
 
-  cat sales_data | ./mapper.py | sort | ./reducer.py
+    cat sales_data | ./mapper.py | sort | ./reducer.py
