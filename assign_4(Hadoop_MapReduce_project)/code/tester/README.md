@@ -19,3 +19,5 @@
   head -50 access_log | ./log_mapper.py | sort | ./log_reducer.py
 
   head -50 access_log | ./log_mapper_iphits.py | sort | ./log_reducer.py
+
+  head -100 access_log | ./log_mapper_fhitsc.py | sort | ./log_reducer_max.py
