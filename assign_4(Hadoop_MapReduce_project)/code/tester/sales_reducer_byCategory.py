@@ -11,6 +11,7 @@ def reducer():
 
         #handle fringe cases
         if len(data) != 2:
+            #print("Unexpected line encountered with data = ",data, file=sys.stderr)
             continue
 
         thisKey, thisSale = data
