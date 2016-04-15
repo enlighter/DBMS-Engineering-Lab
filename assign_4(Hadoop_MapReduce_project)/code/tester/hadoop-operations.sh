@@ -10,4 +10,7 @@ hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -ma
 hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper sales_mapper_byCategory.py -reducer sales_reducer_byCategory.py -file sales_mapper_byCategory.py -file sales_reducer_byCategory.py -input purchases.txt -output sales_by_category
 hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper sales_mapper_byStore.py -reducer sales_reducer_storeMax.py -file sales_mapper_byStore.py -file sales_reducer_storeMax.py -input purchases.txt -output sales_store_max
 hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper sales_mapper_byStore.py -reducer sales_reducer_overallSales.py -file sales_mapper_byStore.py -file sales_reducer_overallSales.py -input purchases.txt -output sales_overall
+
+hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper log_mapper.py -reducer log_reducer.py -file log_mapper.py -file log_reducer.py -input access_log -output log_hits
+
 hadoop fs -put access_log
