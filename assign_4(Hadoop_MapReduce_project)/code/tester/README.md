@@ -10,4 +10,8 @@
 * e.g. `cat sales_data | ./mapper.py`
 * testing map-reduce script in one pipeline:
 
-  `cat sales_data | ./mapper.py | sort | ./reducer.py`
+  `cat sales_data | ./sales_mapper_byStore.py | sort | ./sales_reducer_byStore.py`
+
+* testing map-reduce in pipeline category-wise:
+
+  `cat sales_data | ./sales_mapper_byCategory.py | sort | ./sales_reducer_byCategory.py`
