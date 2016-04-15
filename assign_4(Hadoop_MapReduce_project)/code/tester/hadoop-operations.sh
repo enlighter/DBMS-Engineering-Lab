@@ -13,5 +13,6 @@ hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -ma
 
 hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper log_mapper_filehits.py -reducer log_reducer.py -file log_mapper_filehits.py -file log_reducer.py -input access_log -output log_hits
 hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper log_mapper_iphits.py -reducer log_reducer.py -file log_mapper_iphits.py -file log_reducer.py -input access_log -output log_iphits
+hadoop jar /usr/lib/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -mapper log_mapper_fhitsc.py -reducer log_reducer_max.py -file log_mapper_fhitsc.py -file log_reducer_max.py -input access_log -output log_hits_max
 
 hadoop fs -put access_log
