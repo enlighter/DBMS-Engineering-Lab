@@ -15,3 +15,5 @@
 * testing map-reduce in pipeline category-wise:
 
   `cat sales_data | ./sales_mapper_byCategory.py | sort | ./sales_reducer_byCategory.py`
+
+  head -50 access_log | ./log_mapper.py | sort | ./log_reducer.py
