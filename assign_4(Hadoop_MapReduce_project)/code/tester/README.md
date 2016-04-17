@@ -1,6 +1,9 @@
 #Test and run hadoop operations
-* First download access_log data:
-  wget http://content.udacity-data.com/courses/ud617/access_log.gz
+* First download `access_log` and `purchases.txt` data:
+  `wget http://content.udacity-data.com/courses/ud617/access_log.gz`
+
+  and the purchases.txt from:
+  https://drive.google.com/open?id=0B7RCU39Osj3iUmpacVBZQmpYQ28
 * Then extract the contents in this folder
 
 ##Hadoop operations
@@ -16,8 +19,10 @@
 
   `cat sales_data | ./sales_mapper_byCategory.py | sort | ./sales_reducer_byCategory.py`
 
-  head -50 access_log | ./log_mapper.py | sort | ./log_reducer.py
+* other tests :
 
-  head -50 access_log | ./log_mapper_iphits.py | sort | ./log_reducer.py
+  `head -50 access_log | ./log_mapper.py | sort | ./log_reducer.py`
 
-  head -100 access_log | ./log_mapper_fhitsc.py | sort | ./log_reducer_max.py
+  `head -50 access_log | ./log_mapper_iphits.py | sort | ./log_reducer.py`
+
+  `head -100 access_log | ./log_mapper_fhitsc.py | sort | ./log_reducer_max.py`
