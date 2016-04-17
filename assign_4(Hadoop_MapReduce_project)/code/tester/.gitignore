@@ -1,3 +1,5 @@
+#for the huge data log files
 *log
 *.txt
+#for the files after splitting the main data logs using UNIX 'split' command
 xa*
