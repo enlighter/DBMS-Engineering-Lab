@@ -1,5 +1,6 @@
 #Test and run hadoop operations
 * First download `access_log` and `purchases.txt` data:
+
   `wget http://content.udacity-data.com/courses/ud617/access_log.gz`
 
   and the purchases.txt from:
